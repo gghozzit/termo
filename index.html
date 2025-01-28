@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/gh/chenzlabs/aframe-ar@master/dist/aframe-ar.min.js"></script>
   </head>
   <body>
+    <button id="ar-button">Enter AR</button>
     <a-scene ar>
       <a-camera ar-raycaster raycaster="objects:none;">
         <a-text
@@ -20,5 +21,13 @@
       </a-camera>
       <a-box color="red" scale="0.2 0.2 0.2"></a-box>
     </a-scene>
+
+    <script>
+      document
+        .getElementById("ar-button")
+        .addEventListener("click", function () {
+          document.querySelector("a-scene").enterAR();
+        });
+    </script>
   </body>
 </html>
