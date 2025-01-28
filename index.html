@@ -8,9 +8,16 @@
     <script src="https://cdn.jsdelivr.net/gh/chenzlabs/aframe-ar@master/dist/aframe-ar.min.js"></script>
   </head>
   <body>
-    <button id="ar-button">Enter AR</button>
-    <a-scene ar>
-      <a-camera ar-raycaster raycaster="objects:none;">
+    <script>
+      AFRAME.registerComponent("ar-logic", {
+        init: function () {
+          let hud = document.querySelector("#hud");
+          hud.setAttribute("value", "ar-logic running");
+        },
+      });
+    </script>
+    <a-scene ar ar-logic>
+      <a-camera id="cam" ar-raycaster raycaster="objects:none;">
         <a-text
           id="hud"
           value="contoh text"
@@ -19,15 +26,13 @@
           wrap-count="800"
         ></a-text>
       </a-camera>
+      <a-ring
+        id="marker"
+        rotation="-90 0 0"
+        radius-inner="0.01"
+        radius-outer="0.02"
+      ></a-ring>
       <a-box color="red" scale="0.2 0.2 0.2"></a-box>
     </a-scene>
-
-    <script>
-      document
-        .getElementById("ar-button")
-        .addEventListener("click", function () {
-          document.querySelector("a-scene").enterAR();
-        });
-    </script>
   </body>
 </html>
