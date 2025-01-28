@@ -9,13 +9,37 @@
   </head>
   <body>
     <script>
+      function tampilPesan(pesan) {
+        let hud = document.querySelector("#hud");
+        hud.setAttribute("value", pesan);
+      }
+
       AFRAME.registerComponent("ar-logic", {
         init: function () {
-          let hud = document.querySelector("#hud");
-          hud.setAttribute("value", "ar-logic running");
+          tampilPesan("AR Logic");
+        },
+        tick: function () {
+          let cam = document.querySelecter("#cam");
+          if (!cam) {
+            return;
+          }
+          tampilPesan("Cam Detected");
+          let tumbukan = cam.components.raycastergetIntersection(this.el);
+          if (!tumbukan) {
+            return;
+          }
+          tampilPesan(
+            "Tumbukan Detected" +
+              tumbukan.point.x.toFixed(2) +
+              " " +
+              tumbukan.point.z.toFixed(2)
+          );
+          let marker = document.querySelector("#marker");
+          marker.setAttribute("position", tumbukan.point);
         },
       });
     </script>
+
     <a-scene ar ar-logic>
       <a-camera id="cam" ar-raycaster raycaster="objects:none;">
         <a-text
