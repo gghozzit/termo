@@ -19,17 +19,17 @@
           tampilPesan("AR Logic");
         },
         tick: function () {
-          let cam = document.querySelecter("#cam");
+          let cam = document.querySelector("#cam");
           if (!cam) {
             return;
           }
           tampilPesan("Cam Detected");
-          let tumbukan = cam.components.raycastergetIntersection(this.el);
+          let tumbukan = cam.components.raycaster.getIntersection(this.el);
           if (!tumbukan) {
             return;
           }
           tampilPesan(
-            "Tumbukan Detected" +
+            "Tumbukan Detected: " +
               tumbukan.point.x.toFixed(2) +
               " " +
               tumbukan.point.z.toFixed(2)
@@ -39,17 +39,17 @@
         },
       });
 
-      windows.addEventListener("touchstart", function () {
-        let box = document.querySelector("#box");
+      window.addEventListener("touchstart", function () {
+        let model = document.querySelector("#model");
         let marker = document.querySelector("#marker");
         let pos = marker.getAttribute("position");
 
-        box.setAttribute("position", pos);
+        model.setAttribute("position", pos);
       });
     </script>
 
     <a-scene ar ar-logic>
-      <a-camera id="cam" ar-raycaster raycaster="objects:none;">
+      <a-camera id="cam" ar-raycaster="objects:none;">
         <a-text
           id="hud"
           value="contoh text"
@@ -58,17 +58,22 @@
           wrap-count="800"
         ></a-text>
       </a-camera>
+
+      <!-- Marker untuk AR -->
       <a-ring
         id="marker"
         rotation="-90 0 0"
         radius-inner="0.01"
         radius-outer="0.02"
       ></a-ring>
+
+      <!-- Ganti dengan model 3D dalam format GLB -->
       <a-entity
-        id="box"
+        id="model"
         gltf-model="models/tertutup.glb"
         scale="0.2 0.2 0.2"
         position="0 0 -2"
+        animation-mixer
       ></a-entity>
     </a-scene>
   </body>
