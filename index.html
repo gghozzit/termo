@@ -7,7 +7,7 @@
     
     <!-- Menggunakan A-Frame dan A-Frame AR -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/chenzlabs/aframe-ar@master/dist/aframe-ar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe-ar@master/dist/aframe-ar.js"></script>
   </head>
   <body>
     <script>
@@ -50,7 +50,7 @@
       });
     </script>
 
-    <a-scene ar jscontroller="debug:true" embedded>
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
       <!-- Assets -->
       <a-assets>
         <!-- Pastikan path model GLB sudah benar -->
