@@ -4,74 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Termodinamika</title>
-    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@master/dist/aframe-master.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/chenzlabs/aframe-ar@master/dist/aframe-ar.min.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   </head>
-  <body>
-    <script>
-      function tampilPesan(pesan) {
-        let hud = document.querySelector("#hud");
-        hud.setAttribute("value", pesan);
-      }
+  <body style="margin: 0; overflow: hidden">
+    <a-scene embedded arjs>
+      <!-- Assets -->
+      <a-assets>
+        <a-asset-item id="model" src="assets/models/terbuka.glb"></a-asset-item>
+      </a-assets>
 
-      AFRAME.registerComponent("ar-logic", {
-        init: function () {
-          tampilPesan("AR Logic");
-        },
-        tick: function () {
-          let cam = document.querySelector("#cam");
-          if (!cam) {
-            return;
-          }
-          tampilPesan("Cam Detected");
-          let tumbukan = cam.components.raycaster.getIntersection(this.el);
-          if (!tumbukan) {
-            return;
-          }
-          tampilPesan(
-            "Tumbukan Detected: " +
-              tumbukan.point.x.toFixed(2) +
-              " " +
-              tumbukan.point.z.toFixed(2)
-          );
-          let marker = document.querySelector("#marker");
-          marker.setAttribute("position", tumbukan.point);
-        },
-      });
+      <!-- Pencahayaan -->
+      <a-entity light="type: ambient; color: #BBB"></a-entity>
+      <a-entity
+        light="type: directional; color: #FFF; intensity: 5"
+        position="-2 3 3"
+      ></a-entity>
 
-      window.addEventListener("touchstart", function () {
-        let model = document.querySelector("#model");
-        let marker = document.querySelector("#marker");
-        let pos = marker.getAttribute("position");
+      <a-marker preset="hiro">
+        <!-- Model 3D -->
+        <a-entity gltf-model="#model" position="0 0 0" scale="2 2 2"></a-entity>
+      </a-marker>
 
-        model.setAttribute("position", pos);
-      });
-    </script>
-
-    <a-scene ar ar-logic>
-      <a-camera id="cam" ar-raycaster="objects:none;">
-        <a-text
-          id="hud"
-          value="contoh text"
-          position="0 -0.1 -0.25"
-          align="center"
-          wrap-count="800"
-        ></a-text>
-      </a-camera>
-
-      <!-- Marker untuk AR -->
-      <a-ring
-        id="marker"
-        rotation="-90 0 0"
-        radius-inner="0.01"
-        radius-outer="0.02"
-      ></a-ring>
-
-      <!-- Ganti dengan model 3D dalam format GLB -->
-      <a-gltf-model
-        src="models/tertutup.glb"
-        position="0 1.5 -0.3"
-      ></a-gltf-model>
+      <!-- Kamera -->
+      <a-entity camera> </a-entity>
     </a-scene>
   </body>
 </html>
