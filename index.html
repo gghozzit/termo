@@ -49,6 +49,16 @@
     </script>
 
     <a-scene ar ar-logic>
+      <a-assets>
+        <a-asset-item id="model" src="assets/models/terbuka.glb"></a-asset-item>
+      </a-assets>
+
+      <a-entity light="type: ambient; color: #BBB"></a-entity>
+      <a-entity
+        light="type: directional; color: #FFF; intensity: 5"
+        position="-2 3 3"
+      ></a-entity>
+      
       <a-camera id="cam" ar-raycaster="objects:none;">
         <a-text
           id="hud"
@@ -68,10 +78,15 @@
       ></a-ring>
 
       <!-- Ganti dengan model 3D dalam format GLB -->
-      <a-gltf-model
-        src="models/tertutup.glb"
-        position="0 1.5 -0.3"
-      ></a-gltf-model>
+      <a-entity gltf-model="#model" position="0 1 -1" scale="2 2 2"></a-entity>
+
+      <!-- Kamera -->
+      <a-entity
+        camera
+        look-controls
+        wasd-controls
+        position="0 1.6 0"
+      ></a-entity>
     </a-scene>
   </body>
 </html>
