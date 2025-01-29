@@ -3,15 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<<<<<<< HEAD
     <title>Termodinamika</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.0/dist/aframe-extras.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+=======
+    <title>Termodinamika - AR</title>
+
+    <!-- Menggunakan A-Frame dan A-Frame AR -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe-ar@master/dist/aframe-ar.js"></script>
+>>>>>>> 559b359c0013f76e56a08708cba285b4e0e794e8
   </head>
   <body style="margin: 0; overflow: hidden">
     <a-scene embedded arjs>
       <!-- Assets -->
       <a-assets>
+        <a-asset-item id="model" src="assets/models/terbuka.glb"></a-asset-item>
+      </a-assets>
+
+<<<<<<< HEAD
+      <!-- Pencahayaan -->
+      <a-entity light="type: ambient; color: #BBB"></a-entity>
+      <a-entity
+        light="type: directional; color: #FFF; intensity: 5"
+        position="-2 3 3"
+      ></a-entity>
+=======
+      AFRAME.registerComponent("ar-logic", {
+        init: function () {
+          tampilPesan("AR Logic Initialized");
+        },
+        tick: function () {
+          let cam = document.querySelector("#cam");
+          if (!cam) {
+            return;
+          }
+          tampilPesan("Camera Detected");
+          let tumbukan = cam.components.raycaster.getIntersection(this.el);
+          if (!tumbukan) {
+            return;
+          }
+          tampilPesan(
+            "Tumbukan Detected: " +
+              tumbukan.point.x.toFixed(2) +
+              " " +
+              tumbukan.point.z.toFixed(2)
+          );
+          let marker = document.querySelector("#marker");
+          marker.setAttribute("position", tumbukan.point);
+        },
+      });
+>>>>>>> 559b359c0013f76e56a08708cba285b4e0e794e8
+
+      <a-marker preset="hiro">
+        <!-- Model 3D -->
+        <a-entity gltf-model="#model" position="0 0 0" scale="2 2 2"></a-entity>
+      </a-marker>
+
+<<<<<<< HEAD
+      <!-- Kamera -->
+      <a-entity camera> </a-entity>
+=======
+        model.setAttribute("position", pos);
+      });
+    </script>
+
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;">
+      <!-- Assets -->
+      <a-assets>
+        <!-- Pastikan path model GLB sudah benar -->
         <a-asset-item id="model" src="assets/models/terbuka.glb"></a-asset-item>
       </a-assets>
 
@@ -22,13 +84,31 @@
         position="-2 3 3"
       ></a-entity>
 
-      <a-marker preset="hiro">
-        <!-- Model 3D -->
-        <a-entity gltf-model="#model" position="0 0 0" scale="2 2 2"></a-entity>
+      <!-- Menampilkan HUD di layar -->
+      <a-camera id="cam" ar-raycaster="objects:none;" position="0 0 0">
+        <a-text
+          id="hud"
+          value="Loading AR..."
+          position="0 -0.1 -0.25"
+          align="center"
+          wrap-count="800"
+        ></a-text>
+      </a-camera>
+
+      <!-- Marker untuk AR -->
+      <a-marker preset="hiro" id="marker">
+        <!-- Model 3D akan muncul pada marker ini -->
+        <a-entity gltf-model="#model" scale="0.1 0.1 0.1"></a-entity>
       </a-marker>
 
       <!-- Kamera -->
-      <a-entity camera> </a-entity>
+      <a-entity
+        camera
+        look-controls
+        wasd-controls
+        position="0 1.6 0"
+      ></a-entity>
+>>>>>>> 559b359c0013f76e56a08708cba285b4e0e794e8
     </a-scene>
   </body>
 </html>
