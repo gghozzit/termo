@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Termodinamika - AR</title>
-    
+
     <!-- Menggunakan A-Frame dan A-Frame AR -->
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe-ar@master/dist/aframe-ar.js"></script>
@@ -50,7 +50,7 @@
       });
     </script>
 
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;">
       <!-- Assets -->
       <a-assets>
         <!-- Pastikan path model GLB sudah benar -->
@@ -65,7 +65,7 @@
       ></a-entity>
 
       <!-- Menampilkan HUD di layar -->
-      <a-camera id="cam" ar-raycaster="objects:none;">
+      <a-camera id="cam" ar-raycaster="objects:none;" position="0 0 0">
         <a-text
           id="hud"
           value="Loading AR..."
@@ -76,15 +76,10 @@
       </a-camera>
 
       <!-- Marker untuk AR -->
-      <a-ring
-        id="marker"
-        rotation="-90 0 0"
-        radius-inner="0.01"
-        radius-outer="0.02"
-      ></a-ring>
-
-      <!-- Model 3D -->
-      <a-entity gltf-model="#model" position="0 1 -1" scale="2 2 2"></a-entity>
+      <a-marker preset="hiro" id="marker">
+        <!-- Model 3D akan muncul pada marker ini -->
+        <a-entity gltf-model="#model" scale="0.1 0.1 0.1"></a-entity>
+      </a-marker>
 
       <!-- Kamera -->
       <a-entity
