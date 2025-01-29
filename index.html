@@ -3,8 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Termodinamika</title>
-    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@master/dist/aframe-master.min.js"></script>
+    <title>Termodinamika - AR</title>
+    
+    <!-- Menggunakan A-Frame dan A-Frame AR -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/chenzlabs/aframe-ar@master/dist/aframe-ar.min.js"></script>
   </head>
   <body>
@@ -16,14 +18,14 @@
 
       AFRAME.registerComponent("ar-logic", {
         init: function () {
-          tampilPesan("AR Logic");
+          tampilPesan("AR Logic Initialized");
         },
         tick: function () {
           let cam = document.querySelector("#cam");
           if (!cam) {
             return;
           }
-          tampilPesan("Cam Detected");
+          tampilPesan("Camera Detected");
           let tumbukan = cam.components.raycaster.getIntersection(this.el);
           if (!tumbukan) {
             return;
@@ -48,21 +50,25 @@
       });
     </script>
 
-    <a-scene ar ar-logic>
+    <a-scene ar jscontroller="debug:true" embedded>
+      <!-- Assets -->
       <a-assets>
+        <!-- Pastikan path model GLB sudah benar -->
         <a-asset-item id="model" src="assets/models/terbuka.glb"></a-asset-item>
       </a-assets>
 
+      <!-- Pencahayaan -->
       <a-entity light="type: ambient; color: #BBB"></a-entity>
       <a-entity
         light="type: directional; color: #FFF; intensity: 5"
         position="-2 3 3"
       ></a-entity>
-      
+
+      <!-- Menampilkan HUD di layar -->
       <a-camera id="cam" ar-raycaster="objects:none;">
         <a-text
           id="hud"
-          value="contoh text"
+          value="Loading AR..."
           position="0 -0.1 -0.25"
           align="center"
           wrap-count="800"
@@ -77,7 +83,7 @@
         radius-outer="0.02"
       ></a-ring>
 
-      <!-- Ganti dengan model 3D dalam format GLB -->
+      <!-- Model 3D -->
       <a-entity gltf-model="#model" position="0 1 -1" scale="2 2 2"></a-entity>
 
       <!-- Kamera -->
